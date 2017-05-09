@@ -42,7 +42,7 @@
 				<configuration>
 					<archive>
 						<manifest>
-							<mainClass>pl.pawc.rpilcd.raspberry.App</mainClass>
+							<mainClass>pl.pawc.rpilcd.raspberry.Main</mainClass>
 						</manifest>
 					</archive>
 					<descriptorRefs>
