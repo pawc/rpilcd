@@ -22,7 +22,7 @@ public class ClientController{
 		Socket socket;
 
 		try {
-			socket = new Socket("localhost", 3000);
+			socket = new Socket("192.168.0.12", 3000);
 			ObjectOutputStream oos = new ObjectOutputStream(socket.getOutputStream());
 			oos.writeObject(message+"\n");
 			oos.flush();

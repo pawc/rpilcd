@@ -4,7 +4,6 @@ import org.apache.log4j.Logger;
 
 import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.io.ObjectInputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -13,16 +12,25 @@ public class Main{
     public static void main(String[] args){
 
 		Logger logger = Logger.getLogger(Main.class.getName());
+		Lcd lcd = null;
 
 		ServerSocket serverSocket = null;
-		try {
+		try{
 			serverSocket = new ServerSocket(3000);
 			logger.info("Server socket opened successfully");
-		} catch (IOException e) {
+			lcd = new Lcd();
+			logger.info("LCD Controller initialized");
+		}
+		catch(IOException e){
 			logger.error(e.toString());
 			logger.fatal("Shutting down the app");
 			System.exit(-1);
 		}
+		catch(Exception e){
+			logger.error(e.toString());
+			logger.fatal("Shutting down the app");
+		}
+		
 		
 		while(true){
 			Socket socket;
@@ -37,17 +45,23 @@ public class Main{
 				logger.info("Message received:");
 				logger.info(message);
 				logger.info("Displaying it on LCD...");
-				//print on LCD
+				lcd.print(message);
 				logger.info("Message displayed. Closing streams...");
 				ois.close();
 				socket.close();
 				logger.info("Streams closed");	
-			} catch (IOException e) {
+			}
+			catch(IOException e){
 				e.printStackTrace();
 				logger.error(e.toString());
-			} catch (ClassNotFoundException e) {
+			}
+			catch(ClassNotFoundException e){
 				logger.error(e.toString());
 			}
+			catch(Exception e){
+				logger.error(e.toString());
+			}
+			
 			logger.info("Awaiting another connections...");
 		}
 	
