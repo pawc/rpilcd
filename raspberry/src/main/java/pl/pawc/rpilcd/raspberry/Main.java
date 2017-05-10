@@ -18,7 +18,7 @@ public class Main{
 		try{
 			serverSocket = new ServerSocket(3000);
 			logger.info("Server socket opened successfully");
-			lcd = new Lcd();
+			//lcd = new Lcd();
 			logger.info("LCD Controller initialized");
 		}
 		catch(IOException e){
@@ -45,7 +45,7 @@ public class Main{
 				logger.info("Message received:");
 				logger.info(message);
 				logger.info("Displaying it on LCD...");
-				lcd.print(message);
+				//lcd.print(message);
 				logger.info("Message displayed. Closing streams...");
 				ois.close();
 				socket.close();

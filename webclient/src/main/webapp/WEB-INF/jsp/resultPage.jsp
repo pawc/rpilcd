@@ -44,6 +44,7 @@ width: 40rem;
 </div> 
 <button type="submit" class="btn btn-default submit"><i class="fa fa-paper-plane-o" aria-hidden="true"></i> send</button> 
 </form> 
+<p align="center">${result}</p>
 <div> 
 </body> 
 </html>
