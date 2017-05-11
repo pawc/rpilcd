@@ -11,10 +11,10 @@
   	</parent>
   	<packaging>war</packaging>
   	<version>1.0</version>
-  	<name>webclient Maven Webapp</name>
+  	<name>webclient</name>
   	<url>http://maven.apache.org</url>
   	<dependencies>
-    <dependency>
+    	<dependency>
 			<groupId>commons-logging</groupId>
 			<artifactId>commons-logging</artifactId>
 			<version>1.2</version>
@@ -123,6 +123,11 @@
 			<groupId>javax.servlet</groupId>
 			<artifactId>javax.servlet-api</artifactId>
 			<version>4.0.0-b05</version>
+		</dependency>
+		<dependency>
+			<groupId>pl.pawc.rpilcd</groupId>
+			<artifactId>shared</artifactId>
+			<version>1.0</version>
 		</dependency>
   	</dependencies>
   	
