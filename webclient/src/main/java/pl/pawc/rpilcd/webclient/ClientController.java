@@ -11,6 +11,8 @@ import java.net.Socket;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import pl.pawc.rpilcd.shared.Data;
+
 @Controller
 public class ClientController{
 
@@ -24,7 +26,8 @@ public class ClientController{
 		try {
 			socket = new Socket("localhost", 3000);
 			ObjectOutputStream oos = new ObjectOutputStream(socket.getOutputStream());
-			oos.writeObject(message+"\n");
+			Data data = new Data(message);
+			oos.writeObject(data);
 			oos.flush();
 			socket.close();
 			result = "message sent successfully";

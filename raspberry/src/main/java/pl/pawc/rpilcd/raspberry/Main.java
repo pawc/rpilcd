@@ -8,6 +8,8 @@ import java.io.ObjectInputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 
+import pl.pawc.rpilcd.shared.Data;
+
 public class Main{
     public static void main(String[] args){
 
@@ -41,11 +43,11 @@ public class Main{
 				logger.info("new connection incoming from "+socket.getInetAddress()+". Creating streams...");
 				ObjectInputStream ois = new ObjectInputStream(socket.getInputStream());
 				logger.info("Streams created. Awaiting the message...");
-				String message = (String) ois.readObject();
+				Data data = (Data) ois.readObject();
 				logger.info("Message received:");
-				logger.info(message);
+				logger.info(data.getMessage());
 				logger.info("Displaying it on LCD...");
-				//lcd.print(message);
+				//lcd.print(data.getMessage());
 				logger.info("Message displayed. Closing streams...");
 				ois.close();
 				socket.close();
