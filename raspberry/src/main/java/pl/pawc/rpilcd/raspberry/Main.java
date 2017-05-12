@@ -44,6 +44,7 @@ public class Main{
 				ObjectInputStream ois = new ObjectInputStream(socket.getInputStream());
 				logger.info("Streams created. Awaiting the message...");
 				Data data = (Data) ois.readObject();
+				logger.info("Led state: "+data.getIsLedOn());
 				logger.info("Message received:");
 				logger.info(data.getMessage());
 				logger.info("Displaying it on LCD...");

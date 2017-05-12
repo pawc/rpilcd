@@ -41,10 +41,11 @@ width: 40rem;
 <div class="form-group"> 
 <label class="sr-only" for="message">message</label> 
 <input id="message" type="text" name="message" class="form-control message" placeholder="message"> 
+<input id="checkbox" type="checkbox" name="led">
 </div> 
 <button type="submit" class="btn btn-default submit"><i class="fa fa-paper-plane-o" aria-hidden="true"></i> send</button> 
 </form> 
-<p align="center">${result}</p>
 <div> 
+${result}
 </body> 
 </html>

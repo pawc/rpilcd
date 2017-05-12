@@ -18,7 +18,12 @@ public class ClientController{
 
 	@RequestMapping("result")
 	public ModelAndView send(HttpServletRequest request, HttpServletResponse response){
+
 		String message = request.getParameter("message");
+		Boolean isLcdOn = false;
+		if(request.getParameter("led") != null) isLcdOn = true;
+
+		Data data = new Data(message, isLcdOn);
 
 		String result = "";	
 		Socket socket;
@@ -26,7 +31,6 @@ public class ClientController{
 		try {
 			socket = new Socket("localhost", 3000);
 			ObjectOutputStream oos = new ObjectOutputStream(socket.getOutputStream());
-			Data data = new Data(message);
 			oos.writeObject(data);
 			oos.flush();
 			socket.close();
