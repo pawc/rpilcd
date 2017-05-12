@@ -8,6 +8,7 @@ import com.pi4j.io.gpio.GpioFactory;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 
@@ -26,11 +27,11 @@ public class Main{
 			serverSocket = new ServerSocket(3000);
 			logger.info("Server socket opened successfully");
 			logger.info("Initializing GPIO Controllers...");
-			//GpioController gpio = GpioFactory.getInstance();
+			GpioController gpio = GpioFactory.getInstance();
 			logger.info("...initialized");
-			//led = new Led(gpio);
-			//circuit = new Circuit(gpio);
-			//lcd = new Lcd();
+			led = new Led(gpio);
+			circuit = new Circuit(gpio);
+			lcd = new Lcd();
 			logger.info("... initialized");
 		}
 		catch(IOException e){
@@ -53,21 +54,26 @@ public class Main{
 				ObjectInputStream ois = new ObjectInputStream(socket.getInputStream());
 				logger.info("Streams created. Awaiting the message...");
 				Data data = (Data) ois.readObject();
-				/*logger.info("Circuit state: "+circuit.checkState());
+				boolean state = circuit.checkState();
+				ObjectOutputStream oos = new ObjectOutputStream(socket.getOutputStream());
+				oos.writeObject(state);
+				oos.flush();
+				logger.info("Circuit state: "+circuit.checkState());
 				logger.info("Led state: "+data.getIsLedOn());
 				if(data.getIsLedOn()){
 					led.on();
 				}
 				else{
 					led.off();		
-				}	*/
-
+				}	
+				
 				logger.info("Message received:");
 				logger.info(data.getMessage());
 				logger.info("Displaying it on LCD...");
-				//lcd.print(data.getMessage());
+				lcd.print(data.getMessage());
 				logger.info("Message displayed. Closing streams...");
 				ois.close();
+				oos.close();
 				socket.close();
 				logger.info("Streams closed");	
 			}

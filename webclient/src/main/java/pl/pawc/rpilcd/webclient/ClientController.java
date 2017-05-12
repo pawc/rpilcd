@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 
@@ -28,17 +29,25 @@ public class ClientController{
 		String result = "";	
 		Socket socket;
 
-		try {
-			//socket = new Socket("139.96.30.151", 3000);
-			socket = new Socket("localhost", 3000);
+		try{
+			socket = new Socket("139.96.30.151", 3000);
+			//socket = new Socket("localhost", 3000);
 			ObjectOutputStream oos = new ObjectOutputStream(socket.getOutputStream());
 			oos.writeObject(data);
 			oos.flush();
+			ObjectInputStream ois = new ObjectInputStream(socket.getInputStream());
+			Boolean state = (Boolean) ois.readObject();
+			
 			socket.close();
-			result = "message sent successfully";
-		} catch (IOException e) {
+			result = "message sent successfully. Circuit state: "+state;
+		} 
+		catch(IOException e) {
 			result = e.toString();
 		}
+		catch(ClassNotFoundException e){
+			result = e.toString();
+		}
+		
 
 		return new ModelAndView("resultPage", "result", result);
 	}
