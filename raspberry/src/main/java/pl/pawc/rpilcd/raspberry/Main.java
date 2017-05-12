@@ -21,9 +21,9 @@ public class Main{
 		try{
 			serverSocket = new ServerSocket(3000);
 			logger.info("Server socket opened successfully");
-			//led = new Led();
+			led = new Led();
 			logger.info("LED Controller initialized");
-			//lcd = new Lcd();
+			lcd = new Lcd();
 			logger.info("LCD Controller initialized");
 		}
 		catch(IOException e){
@@ -49,16 +49,16 @@ public class Main{
 
 				logger.info("Led state: "+data.getIsLedOn());
 				if(data.getIsLedOn()){
-					//led.on();
+					led.on();
 				}
 				else{
-					//led.off();		
+					led.off();		
 				}	
 
 				logger.info("Message received:");
 				logger.info(data.getMessage());
 				logger.info("Displaying it on LCD...");
-				//lcd.print(data.getMessage());
+				lcd.print(data.getMessage());
 				logger.info("Message displayed. Closing streams...");
 				ois.close();
 				socket.close();

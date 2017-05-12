@@ -29,7 +29,7 @@ public class ClientController{
 		Socket socket;
 
 		try {
-			socket = new Socket("localhost", 3000);
+			socket = new Socket("139.96.30.151", 3000);
 			ObjectOutputStream oos = new ObjectOutputStream(socket.getOutputStream());
 			oos.writeObject(data);
 			oos.flush();

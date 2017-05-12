@@ -10,10 +10,10 @@ import com.pi4j.system.NetworkInfo;
 public class Lcd{
     public final static int LCD_ROW_1 = 0;
     public final static int LCD_ROW_2 = 1;
-    final GpioLcdDisplay display;
+    final LCDLib display;
     
     public Lcd() throws Exception{
-        display = new GpioLcdDisplay(2,    // number of row supported by LCD
+        display = new LCDLib(2,    // number of row supported by LCD
                 16,       // number of columns supported by LCD
                 RaspiPin.GPIO_09,  // LCD RS pin
                 RaspiPin.GPIO_08,  // LCD strobe pin
