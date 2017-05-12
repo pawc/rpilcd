@@ -141,18 +141,8 @@
 			<version>2.2</version> 	
 			<executions>
 			<execution>
-			<id>exec-undep</id>
-			<goals><goal>undeploy</goal></goals>
-			<phase>clean</phase>
-			<configuration>
-				<url>http://localhost:8080/manager/text</url>
-				<server>TomcatServer</server>
-				<path>/webclient</path>
-			</configuration>
-			</execution>
-			<execution>
-			<id>exec-dep</id>
-			<goals><goal>deploy</goal></goals>
+			<id>exec-redep</id>
+			<goals><goal>redeploy</goal></goals>
 			<phase>package</phase>
 			<configuration>
 		 		<url>http://localhost:8080/manager/text</url> 		
