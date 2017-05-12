@@ -15,11 +15,14 @@ public class Main{
 
 		Logger logger = Logger.getLogger(Main.class.getName());
 		Lcd lcd = null;
+		Led led = null;		
 
 		ServerSocket serverSocket = null;
 		try{
 			serverSocket = new ServerSocket(3000);
 			logger.info("Server socket opened successfully");
+			//led = new Led();
+			logger.info("LED Controller initialized");
 			//lcd = new Lcd();
 			logger.info("LCD Controller initialized");
 		}
@@ -33,7 +36,6 @@ public class Main{
 			logger.fatal("Shutting down the app");
 		}
 		
-		
 		while(true){
 			Socket socket;
 			BufferedReader bufferedReader;
@@ -44,7 +46,15 @@ public class Main{
 				ObjectInputStream ois = new ObjectInputStream(socket.getInputStream());
 				logger.info("Streams created. Awaiting the message...");
 				Data data = (Data) ois.readObject();
+
 				logger.info("Led state: "+data.getIsLedOn());
+				if(data.getIsLedOn()){
+					//led.on();
+				}
+				else{
+					//led.off();		
+				}	
+
 				logger.info("Message received:");
 				logger.info(data.getMessage());
 				logger.info("Displaying it on LCD...");
