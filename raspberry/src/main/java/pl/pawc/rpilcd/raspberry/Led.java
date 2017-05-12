@@ -8,12 +8,10 @@ import com.pi4j.io.gpio.RaspiPin;
 import com.pi4j.system.NetworkInfo;
 
 public class Led{
-    
-	final GpioController gpio;
+
 	final GpioPinDigitalOutput led;
 
-    public Led() throws Exception{
-		gpio = GpioFactory.getInstance();
+    public Led(GpioController gpio) throws Exception{
 		led = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_04, "led", PinState.LOW);
     }
 
