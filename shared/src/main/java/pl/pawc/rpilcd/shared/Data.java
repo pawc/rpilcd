@@ -7,9 +7,9 @@ public class Data implements Serializable{
 	private String message;
 	private boolean output;	
 	
-	public Data(String message, Boolean inputHigh){
+	public Data(String message, Boolean output){
 		this.message = message;
-		this.output = inputHigh;
+		this.output = output;
 	}
 	
 	public String getMessage(){

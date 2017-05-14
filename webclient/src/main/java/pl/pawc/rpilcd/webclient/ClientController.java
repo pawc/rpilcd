@@ -21,10 +21,10 @@ public class ClientController{
 	public ModelAndView send(HttpServletRequest request, HttpServletResponse response){
 
 		String message = request.getParameter("message");
-		Boolean setOutputHigh = false;
-		if(request.getParameter("output") != null) setOutputHigh = true;
+		Boolean output = false;
+		if(request.getParameter("output") != null) output = true;
 
-		Data data = new Data(message, setOutputHigh);
+		Data data = new Data(message, output);
 
 		String result = "";	
 		Socket socket;
