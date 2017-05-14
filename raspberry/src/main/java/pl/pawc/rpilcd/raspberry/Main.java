@@ -4,6 +4,7 @@ import org.apache.log4j.Logger;
 
 import com.pi4j.io.gpio.GpioController;
 import com.pi4j.io.gpio.GpioFactory;
+import com.pi4j.io.gpio.RaspiPin;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -19,8 +20,8 @@ public class Main{
 
 		Logger logger = Logger.getLogger(Main.class.getName());
 		Lcd lcd = null;
-		Led led = null;		
-		Circuit circuit = null;
+		Output output = null;		
+		Input input = null;
 		
 		ServerSocket serverSocket = null;
 		try{
@@ -28,9 +29,8 @@ public class Main{
 			logger.info("Server socket opened successfully");
 			logger.info("Initializing GPIO Controllers...");
 			GpioController gpio = GpioFactory.getInstance();
-			logger.info("...initialized");
-			led = new Led(gpio);
-			circuit = new Circuit(gpio);
+			output = new Output(gpio, RaspiPin.GPIO_04);
+			input = new Input(gpio, RaspiPin.GPIO_06);
 			lcd = new Lcd();
 			logger.info("... initialized");
 		}
@@ -54,17 +54,19 @@ public class Main{
 				ObjectInputStream ois = new ObjectInputStream(socket.getInputStream());
 				logger.info("Streams created. Awaiting the message...");
 				Data data = (Data) ois.readObject();
-				boolean state = circuit.checkState();
+				
+				
+				boolean state = input.isHigh();
 				ObjectOutputStream oos = new ObjectOutputStream(socket.getOutputStream());
 				oos.writeObject(state);
 				oos.flush();
-				logger.info("Circuit state: "+circuit.checkState());
-				logger.info("Led state: "+data.getIsLedOn());
-				if(data.getIsLedOn()){
-					led.on();
+				logger.info("Input state: "+state);
+				
+				if(data.isOutput()){
+					output.on();
 				}
 				else{
-					led.off();		
+					output.off();		
 				}	
 				
 				logger.info("Message received:");
@@ -72,6 +74,7 @@ public class Main{
 				logger.info("Displaying it on LCD...");
 				lcd.print(data.getMessage());
 				logger.info("Message displayed. Closing streams...");
+				
 				ois.close();
 				oos.close();
 				socket.close();

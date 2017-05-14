@@ -21,10 +21,10 @@ public class ClientController{
 	public ModelAndView send(HttpServletRequest request, HttpServletResponse response){
 
 		String message = request.getParameter("message");
-		Boolean isLcdOn = false;
-		if(request.getParameter("led") != null) isLcdOn = true;
+		Boolean setOutputHigh = false;
+		if(request.getParameter("output") != null) setOutputHigh = true;
 
-		Data data = new Data(message, isLcdOn);
+		Data data = new Data(message, setOutputHigh);
 
 		String result = "";	
 		Socket socket;
@@ -39,7 +39,7 @@ public class ClientController{
 			Boolean state = (Boolean) ois.readObject();
 			
 			socket.close();
-			result = "message sent successfully. Circuit state: "+state;
+			result = "message sent successfully. Input state: "+state;
 		} 
 		catch(IOException e) {
 			result = e.toString();

@@ -5,19 +5,19 @@ import java.io.Serializable;
 public class Data implements Serializable{
 	
 	private String message;
-	private boolean isLedOn;	
+	private boolean output;	
 	
-	public Data(String message, Boolean isLedOn){
+	public Data(String message, Boolean inputHigh){
 		this.message = message;
-		this.isLedOn = isLedOn;
+		this.output = inputHigh;
 	}
 	
 	public String getMessage(){
 		return message;
 	}
 
-	public boolean getIsLedOn(){
-		return isLedOn;
+	public boolean isOutput(){
+		return output;
 	} 
 	
 }

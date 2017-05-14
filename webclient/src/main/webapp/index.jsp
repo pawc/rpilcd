@@ -1,7 +1,7 @@
 <!DOCTYPE html> 
 <html> 
 <head> 
-<title>sample form</title> 
+<title>RPi controller</title> 
 <meta charset="utf-8"> 
 <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
 
@@ -41,7 +41,7 @@ width: 40rem;
 <div class="form-group"> 
 <label class="sr-only" for="message">message</label> 
 <input id="message" type="text" name="message" class="form-control message" placeholder="message"> 
-<input id="checkbox" type="checkbox" name="led">
+<input id="checkbox" type="checkbox" name="output">
 </div> 
 <button type="submit" class="btn btn-default submit"><i class="fa fa-paper-plane-o" aria-hidden="true"></i> send</button> 
 </form> 
