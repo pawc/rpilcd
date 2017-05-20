@@ -22,5 +22,16 @@ public class Output{
 	public void off(){
 		output.low();
 	}
+	
+	public static void handle(Output[] outputs, boolean[] data){
+		for(int i = 0; i < data.length ; i++){
+			if(data[i]){
+				outputs[i].on();
+			}
+			else{
+				outputs[i].off();
+			}
+		}
+	}
     
 }

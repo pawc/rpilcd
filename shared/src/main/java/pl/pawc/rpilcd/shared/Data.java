@@ -5,19 +5,19 @@ import java.io.Serializable;
 public class Data implements Serializable{
 	
 	private String message;
-	private boolean output;	
+	private boolean[] outputs;
 	
-	public Data(String message, Boolean output){
+	public Data(String message, boolean[] outputs){
 		this.message = message;
-		this.output = output;
+		this.outputs = outputs;
 	}
 	
 	public String getMessage(){
 		return message;
 	}
 
-	public boolean isOutput(){
-		return output;
-	} 
+	public boolean[] getOutputs(){
+		return outputs;
+	}
 	
 }

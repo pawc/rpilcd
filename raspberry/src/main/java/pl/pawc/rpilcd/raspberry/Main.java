@@ -19,19 +19,26 @@ public class Main{
     public static void main(String[] args){
 
 		Logger logger = Logger.getLogger(Main.class.getName());
-		Lcd lcd = null;
-		Output output = null;		
-		Input input = null;
+		//Lcd lcd = null;	
+		Output[] outputs = new Output[8];
 		
 		ServerSocket serverSocket = null;
+		
 		try{
 			serverSocket = new ServerSocket(3000);
 			logger.info("Server socket opened successfully");
-			logger.info("Initializing GPIO Controllers...");
+			logger.info("Initializing GPIO Controller...");
 			GpioController gpio = GpioFactory.getInstance();
-			output = new Output(gpio, RaspiPin.GPIO_04);
-			input = new Input(gpio, RaspiPin.GPIO_06);
-			lcd = new Lcd();
+			outputs[0] = new Output(gpio, RaspiPin.GPIO_00);
+			outputs[1] = new Output(gpio, RaspiPin.GPIO_01);
+			outputs[2] = new Output(gpio, RaspiPin.GPIO_02);
+			outputs[3] = new Output(gpio, RaspiPin.GPIO_03);
+			outputs[4] = new Output(gpio, RaspiPin.GPIO_04);
+			outputs[5] = new Output(gpio, RaspiPin.GPIO_05);
+			outputs[6] = new Output(gpio, RaspiPin.GPIO_06);
+			outputs[7] = new Output(gpio, RaspiPin.GPIO_07);
+			
+			//lcd = new Lcd();
 			logger.info("... initialized");
 		}
 		catch(IOException e){
@@ -54,29 +61,16 @@ public class Main{
 				ObjectInputStream ois = new ObjectInputStream(socket.getInputStream());
 				logger.info("Streams created. Awaiting the message...");
 				Data data = (Data) ois.readObject();
+								
+				Output.handle(outputs, data.getOutputs());
 				
-				
-				boolean state = input.isHigh();
-				ObjectOutputStream oos = new ObjectOutputStream(socket.getOutputStream());
-				oos.writeObject(state);
-				oos.flush();
-				logger.info("Input state: "+state);
-				
-				if(data.isOutput()){
-					output.on();
-				}
-				else{
-					output.off();		
-				}	
-				
-				logger.info("Message received:");
-				logger.info(data.getMessage());
-				logger.info("Displaying it on LCD...");
-				lcd.print(data.getMessage());
-				logger.info("Message displayed. Closing streams...");
+				//logger.info("Message received:");
+				//logger.info(data.getMessage());
+				//logger.info("Displaying it on LCD...");
+				//lcd.print(data.getMessage());
+				//logger.info("Message displayed. Closing streams...");
 				
 				ois.close();
-				oos.close();
 				socket.close();
 				logger.info("Streams closed");	
 			}
