@@ -19,7 +19,7 @@ public class Main{
     public static void main(String[] args){
 
 		Logger logger = Logger.getLogger(Main.class.getName());
-		//Lcd lcd = null;	
+		Lcd lcd = null;	
 		Output[] outputs = new Output[8];
 		
 		ServerSocket serverSocket = null;
@@ -30,15 +30,15 @@ public class Main{
 			logger.info("Initializing GPIO Controller...");
 			GpioController gpio = GpioFactory.getInstance();
 			outputs[0] = new Output(gpio, RaspiPin.GPIO_00);
-			outputs[1] = new Output(gpio, RaspiPin.GPIO_01);
+			outputs[1] = null; // (reserved for LCD) new Output(gpio, RaspiPin.GPIO_01);
 			outputs[2] = new Output(gpio, RaspiPin.GPIO_02);
 			outputs[3] = new Output(gpio, RaspiPin.GPIO_03);
 			outputs[4] = new Output(gpio, RaspiPin.GPIO_04);
 			outputs[5] = new Output(gpio, RaspiPin.GPIO_05);
 			outputs[6] = new Output(gpio, RaspiPin.GPIO_06);
-			outputs[7] = new Output(gpio, RaspiPin.GPIO_07);
+			outputs[7] = null; // (reserved for LCD) new Output(gpio, RaspiPin.GPIO_07);
 			
-			//lcd = new Lcd();
+			lcd = new Lcd();
 			logger.info("... initialized");
 		}
 		catch(IOException e){
@@ -63,12 +63,7 @@ public class Main{
 				Data data = (Data) ois.readObject();
 								
 				Output.handle(outputs, data.getOutputs());
-				
-				//logger.info("Message received:");
-				//logger.info(data.getMessage());
-				//logger.info("Displaying it on LCD...");
-				//lcd.print(data.getMessage());
-				//logger.info("Message displayed. Closing streams...");
+				lcd.print(data.getMessage());
 				
 				ois.close();
 				socket.close();

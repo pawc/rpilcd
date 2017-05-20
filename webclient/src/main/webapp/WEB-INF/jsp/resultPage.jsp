@@ -42,13 +42,13 @@ width: 40rem;
 <label class="sr-only" for="message">message</label> 
 <input id="message" type="text" name="message" class="form-control message" placeholder="message"><br> 
 gpio 0 <input id="checkbox" type="checkbox" name="output0"><br>
-gpio 1 <input id="checkbox" type="checkbox" name="output1"><br>
+gpio 1 reserved for LCD <input id="checkbox" type="checkbox" name="output1"><br>
 gpio 2 <input id="checkbox" type="checkbox" name="output2"><br>
 gpio 3 <input id="checkbox" type="checkbox" name="output3"><br>
 gpio 4 <input id="checkbox" type="checkbox" name="output4"><br>
 gpio 5 <input id="checkbox" type="checkbox" name="output5"><br>
 gpio 6 <input id="checkbox" type="checkbox" name="output6"><br>
-gpio 7 <input id="checkbox" type="checkbox" name="output7"><br>
+gpio 7 reserved for LCD <input id="checkbox" type="checkbox" name="output7"><br>
 </div> 
 <button type="submit" class="btn btn-default submit"><i class="fa fa-paper-plane-o" aria-hidden="true"></i> send</button> 
 </form> 

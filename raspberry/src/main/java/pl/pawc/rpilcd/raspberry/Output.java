@@ -25,6 +25,7 @@ public class Output{
 	
 	public static void handle(Output[] outputs, boolean[] data){
 		for(int i = 0; i < data.length ; i++){
+			if(outputs[i] == null) continue;
 			if(data[i]){
 				outputs[i].on();
 			}
