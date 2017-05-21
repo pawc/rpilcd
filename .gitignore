@@ -4,3 +4,8 @@
 raspberry/target
 shared/target
 webclient/target
+raspberry/.gitignore
+raspberry/log4j-application.log
+shared/.gitignore
+webclient/.gitignore
+
