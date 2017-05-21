@@ -41,6 +41,11 @@
 	    	<artifactId>shared</artifactId>
 	    	<version>1.0</version>
 	    </dependency>
+	    <dependency>
+	    	<groupId>com.raspoid</groupId>
+	    	<artifactId>raspoid</artifactId>
+	    	<version>1.0</version>
+	    </dependency>
     </dependencies>
 
 	<build>
@@ -83,5 +88,13 @@
 		    </plugin>
 		</plugins>
 	</build>
+	
+	<repositories>
+		<repository>
+			<id>project.local</id>
+	        <name>project</name>
+        	<url>file:${project.basedir}/repo</url>
+		</repository>
+	</repositories>
 
 </project>

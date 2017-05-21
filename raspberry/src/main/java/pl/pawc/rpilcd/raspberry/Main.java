@@ -15,12 +15,15 @@ import java.net.Socket;
 
 import pl.pawc.rpilcd.shared.Data;
 
+import com.raspoid.GPIOPin;
+
 public class Main{
     public static void main(String[] args){
 
 		Logger logger = Logger.getLogger(Main.class.getName());
 		Lcd lcd = null;	
 		Output[] outputs = new Output[8];
+		Sensor sensor = null;
 		
 		ServerSocket serverSocket = null;
 		
@@ -29,7 +32,7 @@ public class Main{
 			logger.info("Server socket opened successfully");
 			logger.info("Initializing GPIO Controller...");
 			GpioController gpio = GpioFactory.getInstance();
-			outputs[0] = new Output(gpio, RaspiPin.GPIO_00);
+			outputs[0] = null; // (reserved for sensor) new Output(gpio, RaspiPin.GPIO_00);
 			outputs[1] = null; // (reserved for LCD) new Output(gpio, RaspiPin.GPIO_01);
 			outputs[2] = new Output(gpio, RaspiPin.GPIO_02);
 			outputs[3] = new Output(gpio, RaspiPin.GPIO_03);
@@ -38,17 +41,21 @@ public class Main{
 			outputs[6] = new Output(gpio, RaspiPin.GPIO_06);
 			outputs[7] = null; // (reserved for LCD) new Output(gpio, RaspiPin.GPIO_07);
 			
+			sensor = new Sensor(gpio, GPIOPin.GPIO_00);
+			new Thread(sensor).start();
+						
 			lcd = new Lcd();
 			logger.info("... initialized");
 		}
 		catch(IOException e){
-			logger.error(e.toString());
+			e.printStackTrace();
 			logger.fatal("Shutting down the app");
 			System.exit(-1);
 		}
 		catch(Exception e){
-			logger.error(e.toString());
+			e.printStackTrace();
 			logger.fatal("Shutting down the app");
+			System.exit(-1);
 		}
 		
 		while(true){
@@ -59,7 +66,6 @@ public class Main{
 				socket = serverSocket.accept();
 				logger.info("new connection incoming from "+socket.getInetAddress()+". Creating streams...");
 				ObjectInputStream ois = new ObjectInputStream(socket.getInputStream());
-				logger.info("Streams created. Awaiting the message...");
 				Data data = (Data) ois.readObject();
 								
 				Output.handle(outputs, data.getOutputs());
@@ -67,7 +73,6 @@ public class Main{
 				
 				ois.close();
 				socket.close();
-				logger.info("Streams closed");	
 			}
 			catch(IOException e){
 				e.printStackTrace();
@@ -79,8 +84,7 @@ public class Main{
 			catch(Exception e){
 				logger.error(e.toString());
 			}
-			
-			logger.info("Awaiting another connections...");
+
 		}
 	
     }
