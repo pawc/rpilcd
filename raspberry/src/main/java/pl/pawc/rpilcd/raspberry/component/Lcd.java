@@ -1,4 +1,4 @@
-package pl.pawc.rpilcd.raspberry;
+package pl.pawc.rpilcd.raspberry.component;
 
 import com.pi4j.component.lcd.LCDTextAlignment;
 import com.pi4j.component.lcd.impl.GpioLcdDisplay;

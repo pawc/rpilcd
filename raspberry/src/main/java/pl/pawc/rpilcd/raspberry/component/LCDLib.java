@@ -1,4 +1,4 @@
-package pl.pawc.rpilcd.raspberry;
+package pl.pawc.rpilcd.raspberry.component;
 
 import com.pi4j.component.lcd.LCD;
 import com.pi4j.component.lcd.LCDBase;

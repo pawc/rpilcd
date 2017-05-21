@@ -1,4 +1,4 @@
-package pl.pawc.rpilcd.raspberry;
+package pl.pawc.rpilcd.raspberry.component;
 
 import com.pi4j.io.gpio.GpioController;
 import com.pi4j.io.gpio.GpioPinDigitalInput;
