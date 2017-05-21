@@ -9,20 +9,25 @@ import java.io.ObjectOutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 
+import pl.pawc.rpilcd.raspberry.component.Buzzer;
 import pl.pawc.rpilcd.raspberry.component.Lcd;
 import pl.pawc.rpilcd.raspberry.component.Led;
 import pl.pawc.rpilcd.raspberry.component.Sensor;
 import pl.pawc.rpilcd.shared.Data;
 
 import com.raspoid.GPIOPin;
+import com.raspoid.PWMPin;
 import com.raspoid.additionalcomponents.LED;
+import com.raspoid.additionalcomponents.PassiveBuzzer;
+import com.raspoid.additionalcomponents.notes.BaseNote;
 
 public class Main{
     public static void main(String[] args){
 
 		Logger logger = Logger.getLogger(Main.class.getName());
-		//Lcd lcd = null;	
+		Lcd lcd = null;	
 		LED[] outputs = new LED[8];
+		//PassiveBuzzer buzzer = new PassiveBuzzer(PWMPin.PWM1);
 		//Sensor sensor = null;
 		
 		ServerSocket serverSocket = null;
@@ -31,7 +36,6 @@ public class Main{
 			serverSocket = new ServerSocket(3000);
 			logger.info("Server socket opened successfully");
 			//logger.info("Initializing GPIO Controller...");
-			//GpioController gpio = GpioFactory.getInstance();
 			outputs[0] = null; // (reserved for sensor)
 			outputs[1] = null; // (reserved for LCD)
 			outputs[2] = new LED(GPIOPin.GPIO_02); 
@@ -44,8 +48,8 @@ public class Main{
 			//sensor = new Sensor(gpio, GPIOPin.GPIO_00);
 			//new Thread(sensor).start();
 						
-			//lcd = new Lcd();
-			//logger.info("... initialized");
+			lcd = new Lcd();
+			logger.info("... initialized");
 		}
 		catch(IOException e){
 			e.printStackTrace();
@@ -64,11 +68,16 @@ public class Main{
 			try {
 				logger.info("Awaiting connections...");
 				socket = serverSocket.accept();
-				logger.info("new connection incoming from "+socket.getInetAddress()+". Creating streams...");
+				logger.info("new connection incoming from "+socket.getInetAddress());
 				ObjectInputStream ois = new ObjectInputStream(socket.getInputStream());
 				Data data = (Data) ois.readObject();
-								
+				
+				//buzzer.playNote(BaseNote.DO_0, 3, 500);
+		        //buzzer.playNote(BaseNote.MI_0, 3, 500);
+		        //buzzer.playNote(BaseNote.SOL_0, 3, 500);
+		        
 				Led.handle(outputs, data.getOutputs());
+				lcd.print(data.getMessage());
 				
 				ois.close();
 				socket.close();
