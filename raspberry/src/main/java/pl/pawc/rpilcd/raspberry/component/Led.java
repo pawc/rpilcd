@@ -15,5 +15,11 @@ public class Led{
 			}
 		}
 	}
+	
+	public static void clean(LED[] outputs){
+		for(int i = 0; i < outputs.length ; i++){
+			outputs[i] = null;
+		}
+	}
     
 }

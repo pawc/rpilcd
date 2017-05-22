@@ -20,6 +20,8 @@ import com.raspoid.PWMPin;
 import com.raspoid.additionalcomponents.LED;
 import com.raspoid.additionalcomponents.PassiveBuzzer;
 import com.raspoid.additionalcomponents.notes.BaseNote;
+import com.raspoid.additionalcomponents.servomotor.ServoMotor;
+import com.raspoid.additionalcomponents.servomotor.TowerProMG90S;
 
 public class Main{
     public static void main(String[] args){
@@ -27,7 +29,6 @@ public class Main{
 		Logger logger = Logger.getLogger(Main.class.getName());
 		Lcd lcd = null;	
 		LED[] outputs = new LED[8];
-		//PassiveBuzzer buzzer = new PassiveBuzzer(PWMPin.PWM1);
 		//Sensor sensor = null;
 		
 		ServerSocket serverSocket = null;
@@ -35,26 +36,12 @@ public class Main{
 		try{
 			serverSocket = new ServerSocket(3000);
 			logger.info("Server socket opened successfully");
-			//logger.info("Initializing GPIO Controller...");
-			outputs[0] = null; // (reserved for sensor)
-			outputs[1] = null; // (reserved for LCD)
-			outputs[2] = new LED(GPIOPin.GPIO_02); 
-			outputs[3] = new LED(GPIOPin.GPIO_03); 
-			outputs[4] = new LED(GPIOPin.GPIO_04);
-			outputs[5] = new LED(GPIOPin.GPIO_05);
-			outputs[6] = new LED(GPIOPin.GPIO_06);
-			//outputs[7] = null; // (reserved for LCD)
-			
+		
 			//sensor = new Sensor(gpio, GPIOPin.GPIO_00);
 			//new Thread(sensor).start();
 						
 			lcd = new Lcd();
-			logger.info("... initialized");
-		}
-		catch(IOException e){
-			e.printStackTrace();
-			logger.fatal("Shutting down the app");
-			System.exit(-1);
+			
 		}
 		catch(Exception e){
 			e.printStackTrace();
@@ -72,22 +59,36 @@ public class Main{
 				ObjectInputStream ois = new ObjectInputStream(socket.getInputStream());
 				Data data = (Data) ois.readObject();
 				
-				//buzzer.playNote(BaseNote.DO_0, 3, 500);
-		        //buzzer.playNote(BaseNote.MI_0, 3, 500);
-		        //buzzer.playNote(BaseNote.SOL_0, 3, 500);
-		        
+				outputs[0] = null; // (reserved for sensor)
+				outputs[1] = null; // (reserved for LCD)
+				outputs[2] = new LED(GPIOPin.GPIO_02); 
+				outputs[3] = new LED(GPIOPin.GPIO_03); 
+				outputs[4] = new LED(GPIOPin.GPIO_04);
+				outputs[5] = new LED(GPIOPin.GPIO_05);
+				outputs[6] = new LED(GPIOPin.GPIO_06);
+				outputs[7] = null; // (reserved for LCD)
+				       
 				Led.handle(outputs, data.getOutputs());
+				Led.clean(outputs);
+				
+				PassiveBuzzer buzzer = new PassiveBuzzer(PWMPin.PWM1);
+				buzzer.playNote(BaseNote.DO_0, 3, 500);
+		        buzzer.playNote(BaseNote.RE_0, 3, 500);
+		        buzzer.playNote(BaseNote.LA_0, 3, 500);
+		        buzzer = null;
+		        
+		        ServoMotor motor = new TowerProMG90S(PWMPin.PWM0);
+		        if("0".equals(data.getMessage())) motor.setAngle(0);
+		        if("45".equals(data.getMessage())) motor.setAngle(45);
+		        if("90".equals(data.getMessage())) motor.setAngle(90);
+		        motor = null;
+		        		
 				lcd.print(data.getMessage());
+				
+				System.out.println("ok");
 				
 				ois.close();
 				socket.close();
-			}
-			catch(IOException e){
-				e.printStackTrace();
-				logger.error(e.toString());
-			}
-			catch(ClassNotFoundException e){
-				logger.error(e.toString());
 			}
 			catch(Exception e){
 				logger.error(e.toString());
