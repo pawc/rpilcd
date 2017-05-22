@@ -13,4 +13,12 @@
     <servlet-name>DefaultServlet</servlet-name>  
     <url-pattern>*.html</url-pattern>  
 </servlet-mapping>  
+<servlet>
+	<servlet-name>resultPage.jsp</servlet-name>
+	<jsp-file>/WEB-INF/jsp/resultPage.jsp</jsp-file>
+</servlet>
+<servlet-mapping>
+	<servlet-name>resultPage.jsp</servlet-name>
+	<url-pattern>/resultPage</url-pattern>
+</servlet-mapping>
 </web-app>
