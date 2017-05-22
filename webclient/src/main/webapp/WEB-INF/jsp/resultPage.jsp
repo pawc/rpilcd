@@ -39,7 +39,7 @@ width: 40rem;
 <div class="form-container"> 
 <script type="text/javascript" src="/webclient/static/validate.js">
 </script>
-<form action="result.html" method="post" id="sendMsgForm" class="form-inline" onmouseover="showalert()"> 
+<form action="result.html" method="post" id="sendMsgForm" class="form-inline" onsubmit="return validateMessage(document.getElementById('message').value)"> 
 <div class="form-group"> 
 <label class="sr-only" for="message">message</label> 
 <input id="message" type="text" name="message" class="form-control message" placeholder="message"><br> 
