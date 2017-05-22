@@ -33,11 +33,13 @@ text-align: left;
 .form-container form .message { 
 width: 40rem; 
 } 
-</style> 
+</style> 	
 </head> 
 <body> 
 <div class="form-container"> 
-<form action="result.html" method="post" id="sendMsgForm" class="form-inline"> 
+<script type="text/javascript" src="/webclient/static/validate.js">
+</script>
+<form action="result.html" method="post" id="sendMsgForm" class="form-inline" onmouseover="showalert()"> 
 <div class="form-group"> 
 <label class="sr-only" for="message">message</label> 
 <input id="message" type="text" name="message" class="form-control message" placeholder="message"><br> 
@@ -52,6 +54,7 @@ gpio 7 reserved for LCD <input id="checkbox" type="checkbox" name="output7"><br>
 </div> 
 <button type="submit" class="btn btn-default submit"><i class="fa fa-paper-plane-o" aria-hidden="true"></i> send</button> 
 </form> 
+
 <div> 
 ${result}
 </body> 
